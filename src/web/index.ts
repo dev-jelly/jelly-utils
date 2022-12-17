@@ -4,7 +4,7 @@ const render = () => {
   const app = document.getElementById("app");
 
   const canvas = document.createElement("canvas");
-  canvas.height = 300;
+  canvas.height = 30;
   canvas.width = 1200;
   const ctx = canvas.getContext("2d");
   const positions = {x: [], y: []};
