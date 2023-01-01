@@ -69,5 +69,4 @@ export class SortedList<T> {
     if (end) return this.list.slice(this.findIndex(start), this.findIndex(end));
     return this.list.slice(this.findIndex(start));
   }
-
 }
