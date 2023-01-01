@@ -1,10 +1,12 @@
 type SortedList<T> = {
   add: (item: T) => void;
   get: (index: number) => T;
-  find: (item: T) => number;
+  find: (item: T) => T;
   findIndex: (item: T) => number;
-  remove: (item: number) => void;
+  remove: (item: T) => void;
   removeIndex: (index: number) => void;
+  array: T[];
+  merge: (list: SortedList<T>) => SortedList<T>;
   length: number;
 }
 
@@ -40,6 +42,11 @@ export const sortedList = <T>(compare: (a: T, b: T) => number): SortedList<T> =>
       list.splice(index, 1);
     },
     removeIndex: (index: number) => list.splice(index, 1),
+    merge: (list2: SortedList<T>) => {
+      const newList = [...list, ...list2.array]
+      newList.sort(compare);
+      return sortedList(compare);
+    },
     get array () {
       return list;
     },
