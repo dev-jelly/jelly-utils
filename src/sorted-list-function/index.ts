@@ -10,9 +10,9 @@ type SortedList<T> = {
   length: number;
 }
 
-const binarySearch = <T>(list: T[], compare, value: T): number => {
-  let start = 0;
-  let end = list.length;
+const binarySearch = <T>(list: T[], compare, value: T, start?: number, end?: number): number => {
+  start = start || 0;
+  end = end || list.length;
   while (start < end) {
     const mid = Math.floor((start + end) / 2);
     const compareResult = compare(value, list[mid]);
@@ -27,8 +27,7 @@ const binarySearch = <T>(list: T[], compare, value: T): number => {
   return start;
 }
 
-export const sortedList = <T>(compare: (a: T, b: T) => number): SortedList<T> => {
-  let list: T[] = [];
+export const sortedList = <T>(compare: (a: T, b: T) => number, list: T[] = []): SortedList<T> => {
   return {
     add: (item: T) => {
       const index = binarySearch(list, compare, item);
@@ -47,7 +46,8 @@ export const sortedList = <T>(compare: (a: T, b: T) => number): SortedList<T> =>
       newList.sort(compare);
       return sortedList(compare);
     },
-    get array () {
+
+    get array() {
       return list;
     },
     get length() {
