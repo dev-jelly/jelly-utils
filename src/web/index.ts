@@ -1,23 +1,31 @@
-import {waveFill} from "../draws";
+import {basisFill, waveFill} from "../draws";
 import {SortedList} from "../sorted-list-class";
 
 const render = async () => {
   const app = document.getElementById("app");
   const waveFillCanvas = renderWaveFill();
   app.appendChild(waveFillCanvas);
+
+  const basisFillCanvas = renderBasisFill();
+  app.appendChild(basisFillCanvas);
+
+  const basisWaveFillCanvas = renderBasisFill(true);
+  app.appendChild(basisWaveFillCanvas);
+
   const sortedBenchmark = await renderSortedBenchmark();
   app.appendChild(sortedBenchmark);
+
 }
 
 
 const renderWaveFill = () => {
   const canvas = document.createElement("canvas");
-  canvas.height = 30;
+  canvas.height = 120;
   canvas.width = 1200;
   const ctx = canvas.getContext("2d");
   const positions = {x: [], y: []};
 
-  for (let i = 0; i < canvas.width; i++) {
+  for (let i = 0; i < canvas.width; i += 15) {
     const x = i;
     const y = Math.floor(Math.random() * canvas.height);
     positions.x.push(x);
@@ -26,6 +34,24 @@ const renderWaveFill = () => {
   waveFill(canvas, ctx, positions);
   return canvas;
 }
+
+const renderBasisFill = (wave = false) => {
+  const canvas = document.createElement("canvas");
+  canvas.height = 120;
+  canvas.width = 1200;
+  const ctx = canvas.getContext("2d");
+  const positions = {x: [], y: []};
+
+  for (let i = 0; i < canvas.width; i += 15) {
+    const x = i;
+    const y = Math.floor(Math.random() * canvas.height);
+    positions.x.push(x);
+    positions.y.push(y);
+  }
+  basisFill(canvas, ctx, positions, "rgba(0, 0, 0, 0.5)", wave, true);
+  return canvas;
+}
+
 
 const testCount = 5;
 const arrLength = 10000;
@@ -107,5 +133,6 @@ const renderSortedBenchmark = async () => {
   div.appendChild(p);
   return div;
 }
+
 
 render().then(console.log).catch(console.error);
