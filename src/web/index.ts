@@ -1,8 +1,8 @@
 import {basisFill, waveFill} from "../draws";
 import {SortedList} from "../sorted-list-class";
-
+const app = document.getElementById("app");
 const render = async () => {
-  const app = document.getElementById("app");
+
   const waveFillCanvas = renderWaveFill();
   app.appendChild(waveFillCanvas);
 
@@ -12,10 +12,17 @@ const render = async () => {
   const basisWaveFillCanvas = renderBasisFill(true);
   app.appendChild(basisWaveFillCanvas);
 
-  const sortedBenchmark = await renderSortedBenchmark();
-  app.appendChild(sortedBenchmark);
-
+  const sortedBenchMarkButton = document.createElement("button");
+  sortedBenchMarkButton.innerText = "Sorted List Benchmark";
+  sortedBenchMarkButton.onclick = startBenchmark;
+  app.appendChild(sortedBenchMarkButton);
 }
+
+
+async function startBenchmark() {
+  await renderSortedBenchmark();
+}
+
 
 
 const renderWaveFill = () => {
@@ -92,7 +99,8 @@ const sortedListBenchmark = () => {
 }
 
 const renderSortedBenchmark = async () => {
-  const div = document.createElement("div");
+  const div = document.getElementById("sorted-benchmark");
+  div.innerHTML = "";
   const pre = document.createElement("pre");
   pre.innerText = `When List Has ${arrLength} Elements. Add ${arrLength} Elements
   // Sorted List Codes
